@@ -1,12 +1,16 @@
 # ディレクトリ構成案
 
-作成日：2026-09-09。現在作成しているのはREADMEと文書だけ。下記の`src`・`tests`等は実装開始時に追加する予定の配置である。
+作成日：2026-09-09。現在あるのは文書とリポジトリ検査用のCI・スクリプト・テスト。下記の`src`とアプリ用テストプロジェクトは実装開始時に追加する予定の配置である。
 
 ```text
 minecraft-mod-sync/
   README.md
+  CONTRIBUTING.md
   .gitignore
   .gitattributes
+  .github/
+    workflows/ci.yml
+    rulesets/branch-protection.json
   docs/
     requirements.md
     design.md
@@ -31,12 +35,14 @@ minecraft-mod-sync/
       Setup/              # 初回案内と専用インスタンスの登録
       Shared/             # 共通の画面要素
   tests/
+    test_validate_repository.py # リポジトリ検査スクリプトのテスト
     ModSync.Core.Tests/
     ModSync.Platform.Tests/
     fixtures/             # 自作の小さな疑似データだけ
   schemas/                # 配布情報の形式を固定するときに追加
   examples/               # 接続先・認証情報を含まない例
-  scripts/                # ビルド・梱包等が必要になった時に追加
+  scripts/
+    validate_repository.py # 文書・JSONの検査。ビルド・梱包用は必要時に追加
 ```
 
 ## 依存方向
