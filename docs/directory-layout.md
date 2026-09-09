@@ -5,6 +5,7 @@
 ```text
 minecraft-mod-sync/
   README.md
+  CONTRIBUTING.md
   .gitignore
   .gitattributes
   docs/

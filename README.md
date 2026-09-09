@@ -8,6 +8,7 @@
 - [設計案](docs/design.md)：処理の分担、配布形式、更新・復旧、画面
 - [ディレクトリ構成案](docs/directory-layout.md)：実装時の配置と依存方向
 - [実装・検証計画](docs/implementation-plan.md)：実現性を先に確認する項目と受入条件
+- [開発の進め方](CONTRIBUTING.md)：main・devの役割、作業ブランチ、PRとリリースの流れ
 
 初期対応はWindows 11、Minecraft 1.21.1、NeoForge、Prism Launcherです。利用規模は管理者を含め最大8人程度を想定します。
 
