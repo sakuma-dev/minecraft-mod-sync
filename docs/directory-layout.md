@@ -20,7 +20,7 @@ minecraft-mod-sync/
     ModSync.Core/
       Distribution/       # 配布情報、読み取り、取得経路
       Publishing/         # 選択、固定、検証用環境、確認記録、公開
-      Synchronization/    # 調査、差分、状態遷移、反映
+      Synchronization/    # 調査、差分、反映、起動前確認、公開変更への追従
       Recovery/           # 途中失敗の復旧、前回更新の取消
       ModCatalog/         # MOD ID、依存、確認可能な競合
       ResourcePacks/      # パック分類、優先順と設定変更の計画
@@ -63,6 +63,7 @@ minecraft-mod-sync/
     verification.json      # 内容ハッシュ、検証用環境、確認結果。参加者へ配らない
   instances/<instanceKey>/
     state.json             # packId、適用版、管理台帳
+    join-session.json      # 参加操作ID、自動追従回数、現在の更新処理ID
     operations/            # 進行中処理と復旧用記録
     undo/                  # 成功した前回更新の取消用
     quarantine/            # 本人が退避した個人MOD
