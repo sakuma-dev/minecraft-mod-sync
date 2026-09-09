@@ -1,0 +1,36 @@
+# Build outputs
+**/bin/
+**/obj/
+TestResults/
+artifacts/
+
+# Local tooling
+.vs/
+.idea/
+*.user
+*.suo
+
+# Local credentials and operational state
+.env
+.env.*
+!.env.example
+secrets/
+runtime/
+local-data/
+*.key
+*.pfx
+*.p12
+
+# Real game payloads and backups are not source code
+*.jar
+*.zip
+*.7z
+*.exe
+*.dll
+mods/
+resourcepacks/
+world/
+worlds/
+saves/
+backups/
+accounts.json
