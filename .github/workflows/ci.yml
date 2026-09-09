@@ -1,0 +1,36 @@
+name: Repository CI
+
+on:
+  pull_request:
+    branches: [main, dev, 'release/**']
+  push:
+    branches: [main, dev, 'release/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repository-ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository-checks:
+    name: Repository checks
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.13'
+      - name: Test repository validation
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Validate repository files
+        run: python scripts/validate_repository.py
+      - name: Check whitespace in tracked content
+        run: git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD
