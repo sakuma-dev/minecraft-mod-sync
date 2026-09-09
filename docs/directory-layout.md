@@ -19,7 +19,7 @@ minecraft-mod-sync/
   src/
     ModSync.Core/
       Distribution/       # 配布情報、読み取り、取得経路
-      Publishing/         # 選択、準備、検証、公開
+      Publishing/         # 選択、固定、検証用環境、確認記録、公開
       Synchronization/    # 調査、差分、状態遷移、反映
       Recovery/           # 途中失敗の復旧、前回更新の取消
       ModCatalog/         # MOD ID、依存、確認可能な競合
@@ -58,6 +58,9 @@ minecraft-mod-sync/
 ```text
 アプリ用のローカルデータ領域/
   settings.json
+  publishing/<releaseId>/
+    prepared/              # 固定したmanifest・初回取込データ・自前ファイル
+    verification.json      # 内容ハッシュ、検証用環境、確認結果。参加者へ配らない
   instances/<instanceKey>/
     state.json             # packId、適用版、管理台帳
     operations/            # 進行中処理と復旧用記録
