@@ -1,13 +1,19 @@
 # ディレクトリ構成案
 
-作成日：2026-09-09。更新日：2026-09-10。現在あるのは文書とリポジトリ検査用のCI・スクリプト・テスト。下記の`src`とアプリ用テストプロジェクトは実装開始時に追加する予定の配置である。
+作成日：2026-09-09。更新日：2026-09-11。3つの製品プロジェクト、Core/Platformのテスト、最小WPFアプリとSDK・ビルド手順を追加した。下記は今後の機能配置も含む構成案。配布・同期・復旧・Prism等の未実装フォルダーは、必要な実装を追加する時点で作る。
 
 ```text
 minecraft-mod-sync/
   README.md
   CONTRIBUTING.md
+  ModSync.slnx
+  global.json             # 開発SDKの版を固定
+  Directory.Build.props
+  NuGet.Config
+  .editorconfig
   .gitignore
   .gitattributes
+  eng/dotnet-sdk.json     # 導入するSDKの公式URLとSHA-512
   .github/
     workflows/ci.yml
     rulesets/branch-protection.json
@@ -16,8 +22,10 @@ minecraft-mod-sync/
     design.md
     directory-layout.md
     implementation-plan.md
+    development.md
   src/
     ModSync.Core/
+      Integrity/          # 作成済み: ストリームのSHA-256計算
       Distribution/       # 配布情報、読み取り、取得経路
       Publishing/         # 選択、固定、検証用環境、確認記録、公開
       Synchronization/    # 調査、差分、反映、起動前確認、公開変更への追従
@@ -30,6 +38,8 @@ minecraft-mod-sync/
       Transfer/           # HTTPS取得、SFTP公開、手動ファイル検出
       Credentials/        # Windows上の公開用資格情報の扱い
     ModSync.Desktop/
+      App.xaml            # 作成済み: 最小アプリと開発用起動確認
+      MainWindow.xaml
       Participant/        # 参加者の画面と表示状態
       Administrator/      # 配布セット準備・公開画面
       Setup/              # 初回案内と専用インスタンスの登録
@@ -42,6 +52,8 @@ minecraft-mod-sync/
   schemas/                # 配布情報の形式を固定するときに追加
   examples/               # 接続先・認証情報を含まない例
   scripts/
+    setup.ps1             # 固定SDKを専用ユーザー領域へ導入
+    dev.ps1               # ビルド・テスト・起動の共通入口
     validate_repository.py # 文書・JSONの検査。ビルド・梱包用は必要時に追加
 ```
 

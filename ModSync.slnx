@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ModSync.Core/ModSync.Core.csproj" />
+    <Project Path="src/ModSync.Desktop/ModSync.Desktop.csproj" />
+    <Project Path="src/ModSync.Platform/ModSync.Platform.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ModSync.Core.Tests/ModSync.Core.Tests.csproj" />
+    <Project Path="tests/ModSync.Platform.Tests/ModSync.Platform.Tests.csproj" />
+  </Folder>
+</Solution>
