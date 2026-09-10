@@ -1,6 +1,6 @@
 # ディレクトリ構成案
 
-作成日：2026-09-09。現在あるのは文書とリポジトリ検査用のCI・スクリプト・テスト。下記の`src`とアプリ用テストプロジェクトは実装開始時に追加する予定の配置である。
+作成日：2026-09-09。更新日：2026-09-10。現在あるのは文書とリポジトリ検査用のCI・スクリプト・テスト。下記の`src`とアプリ用テストプロジェクトは実装開始時に追加する予定の配置である。
 
 ```text
 minecraft-mod-sync/
@@ -19,10 +19,10 @@ minecraft-mod-sync/
   src/
     ModSync.Core/
       Distribution/       # 配布情報、読み取り、取得経路
-      Publishing/         # 選択、準備、検証、公開
-      Synchronization/    # 調査、差分、状態遷移、反映
+      Publishing/         # 選択、固定、検証用環境、確認記録、公開
+      Synchronization/    # 調査、差分、反映、起動前確認、公開変更への追従
       Recovery/           # 途中失敗の復旧、前回更新の取消
-      ModCatalog/         # MOD ID、依存、確認可能な競合
+      ModCatalog/         # ファイルと全MOD IDの対応、依存、退避の影響、競合
       ResourcePacks/      # パック分類、優先順と設定変更の計画
     ModSync.Platform/
       Prism/              # 検出、取り込み、起動、状態の観測
@@ -58,11 +58,15 @@ minecraft-mod-sync/
 ```text
 アプリ用のローカルデータ領域/
   settings.json
+  publishing/<releaseId>/
+    prepared/              # 固定したmanifest・初回取込データ・自前ファイル
+    verification.json      # 内容ハッシュ、検証用環境、確認結果。参加者へ配らない
   instances/<instanceKey>/
     state.json             # packId、適用版、管理台帳
+    join-session.json      # 参加操作ID、自動追従回数、現在の更新処理ID
     operations/            # 進行中処理と復旧用記録
     undo/                  # 成功した前回更新の取消用
-    quarantine/            # 本人が退避した個人MOD
+    quarantine/            # 個人JARの実体、元パス・ハッシュ・全MOD ID・退避理由
   cache/                   # 内容を照合した取得済みファイル
   logs/
 ```
