@@ -1,6 +1,6 @@
 # 設計案
 
-作成日：2026-09-09。更新日：2026-09-10。要件は[要件定義](requirements.md)、具体的な方式はこの文書の設計案。設計レビューに基づき公開前の参加検証、起動前の最新版確認、複数MOD入りJARの扱いを改訂した。アプリの実装・実機検証はまだ行っていない。
+作成日：2026-09-09。更新日：2026-09-11。要件は[要件定義](requirements.md)、具体的な方式はこの文書の設計案。設計レビューに基づき公開前の参加検証、起動前の最新版確認、複数MOD入りJARの扱いを改訂した。開発基盤と最小アプリの起動確認を追加したが、同期・Prism連携の実装と実参加の検証はまだ行っていない。
 
 ## 全体構成
 
@@ -27,7 +27,7 @@ flowchart LR
 
 比較したFlutterは、既存のDart経験や複数OSの画面展開が利点になる。今回は他OS対応を初期要件としていないためWPFを優先するが、同期性能や復元の安全性に優劣があると測定したわけではない。
 
-.NET 10はLTS。利用者向けには.NETランタイムを同梱する配布方式を候補とし、配布量・更新方法を実装時に確定する。開発PCでは`dotnet --list-sdks`にSDKが表示されなかったため、実装前にSDK導入が必要である。[WPF公式](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/overview/)、[.NETサポート方針](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)、[.NET配布方式](https://learn.microsoft.com/en-us/dotnet/core/deploying/)、[Flutter Windows](https://docs.flutter.dev/platform-integration/windows/building)
+.NET 10はLTS。開発基盤ではSDK 10.0.401を固定し、[セットアップ手順](development.md)でユーザー専用領域に導入する。利用者向けには.NETランタイムを同梱する配布方式を候補とし、配布量・更新方法を実装時に確定する。現在の最小アプリは開発用SDKのランタイムで動作し、利用者向けの配布物ではない。[WPF公式](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/overview/)、[.NETサポート方針](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core)、[.NET配布方式](https://learn.microsoft.com/en-us/dotnet/core/deploying/)、[Flutter Windows](https://docs.flutter.dev/platform-integration/windows/building)
 
 ## ModuleとInterface
 

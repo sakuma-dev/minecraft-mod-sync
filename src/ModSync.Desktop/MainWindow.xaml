@@ -1,0 +1,29 @@
+<Window x:Class="ModSync.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Minecraft MOD Sync" Height="400" Width="660"
+        MinHeight="360" MinWidth="600" WindowStartupLocation="CenterScreen"
+        FontFamily="Yu Gothic UI" FontSize="14" Background="#F4F6F8">
+    <Grid Margin="32">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="Minecraft MOD Sync" FontSize="28" FontWeight="SemiBold" Foreground="#182638" />
+            <TextBlock Text="開発用プレビュー" Margin="0,8,0,0" Foreground="#53657A" />
+        </StackPanel>
+        <Border Grid.Row="1" Margin="0,24,0,24" Padding="20" Background="White" CornerRadius="8">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="最小アプリが起動しました" FontSize="18" FontWeight="SemiBold" />
+                <TextBlock Margin="0,12,0,0" TextWrapping="Wrap" Foreground="#53657A"
+                           Text="専用インスタンスの作成・構成の更新・サーバー参加は、これから追加します。この版は起動確認用です。" />
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="参加（準備中）" IsEnabled="False" Padding="20,10" Margin="0,0,12,0" />
+            <Button Content="閉じる" Padding="20,10" Click="Close_Click" />
+        </StackPanel>
+    </Grid>
+</Window>

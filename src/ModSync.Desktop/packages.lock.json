@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0-windows7.0": {
+      "modsync.core": {
+        "type": "Project"
+      },
+      "modsync.platform": {
+        "type": "Project",
+        "dependencies": {
+          "ModSync.Core": "[1.0.0, )"
+        }
+      }
+    }
+  }
+}

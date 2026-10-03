@@ -18,7 +18,10 @@ jobs:
   repository-checks:
     name: Repository checks
     runs-on: windows-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -34,3 +37,23 @@ jobs:
         run: python scripts/validate_repository.py
       - name: Check whitespace in tracked content
         run: git diff --check 4b825dc642cb6eb9a060e54bf8d69288fbee4904 HEAD
+      - name: Set up pinned .NET SDK
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6
+        with:
+          global-json-file: global.json
+      - name: Build and test application
+        shell: powershell
+        run: .\scripts\dev.ps1 -Task Check
+      - name: Verify WPF startup
+        shell: powershell
+        run: .\scripts\dev.ps1 -Task Smoke
+      - name: Save test and startup results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: verification-results
+          path: |
+            artifacts/TestResults/
+            artifacts/startup/
+          if-no-files-found: ignore
+          retention-days: 7

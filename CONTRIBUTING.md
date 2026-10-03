@@ -17,7 +17,7 @@
 
 通常の作業ブランチは最新の`dev`から作る。`main`と`dev`は長期運用し、直接push、force-push、削除を行わない。リポジトリ作成と今回の運用開始用文書の登録だけは、初期セットアップとして直接コミットする。
 
-現在は文書と開発用の検査・CIを整備済みで、アプリ本体は未実装。`main`を安定版の置き場とすることは、現在のコミットが配布済みアプリであるという意味ではない。
+現在は文書、開発基盤、起動確認用の最小WPFアプリを用意している。同期・Prism連携は未実装。[セットアップ手順](docs/development.md)で固定SDKの導入、ビルド・テスト・起動を確認する。`main`を安定版の置き場とすることは、現在のコミットが配布済みアプリであるという意味ではない。
 
 ## 通常の開発
 
@@ -68,7 +68,7 @@ PR本文には、対象Issue、変更の目的・主な動作・検証結果・�
 
 ## 現在の検証とGitHub設定
 
-現在のCIは[Repository CI](.github/workflows/ci.yml)の`Repository checks`。Windows上で検査スクリプトのテスト、追跡Markdownの厳格UTF-8・改行・ローカルリンク、JSONの構文、`git diff --check`を確認する。`main`・`dev`・`release/**`向けPRとpushで実行し、パス条件による省略をしない。アプリのビルド・テストが実行できたことにはしない。
+現在のCIは[Repository CI](.github/workflows/ci.yml)の`Repository checks`。Windows上で検査スクリプトのテスト、追跡Markdownの厳格UTF-8・改行・ローカルリンク、JSONの構文、`git diff --check`を確認する。固定SDKでのアプリビルド・Core/Platformのテスト・WPF起動の自動確認も同じ必須チェック内で行う。`main`・`dev`・`release/**`向けPRとpushで実行し、パス条件による省略をしない。CIの成功をMinecraftへの実参加や2人のPCでの確認の代用にしない。
 
 GitHubのデフォルトブランチは`dev`とする。[保護ルールの設定ファイル](.github/rulesets/branch-protection.json)は`main`・`dev`・`release/`配下を対象にし、PR、会話の解決、最新の取り込み先を含む`Repository checks`の成功を要求する。GitHub Actions（App ID 15368）からのチェックだけを認め、削除とforce-pushを禁止する。管理者の常用bypassは設けない。
 
@@ -76,7 +76,7 @@ GitHubのデフォルトブランチは`dev`とする。[保護ルールの設�
 
 2026-09-09に所有者の指示でリポジトリを公開し、[branch-protectionルール](https://github.com/sakuma-dev/minecraft-mod-sync/rules/22642836)を有効化した。GitHub APIで設定ファイルとの一致と、`main`・`dev`・`release/v0.1`に対するルールの適用を確認した。`Repository checks`はGitHub Actionsで成功を確認してから必須化している。設定ファイルを変更しただけではGitHub側のルールは変わらないため、今後の変更でもAPIまたは設定画面で適用し、読み戻して確認する。
 
-実装基盤を導入した段階でアプリのビルド・テストをCIへ追加し、実際に成功するチェックを確認してから必須化する。存在しないチェック名を先に登録しない。CIがない過去タグから保守ブランチを作る場合は、保守用のCIを含むPRで準備する。
+新しい必須チェックを分けて追加する場合は、実際に成功する実行を確認してから必須化する。存在しないチェック名を先に登録しない。CIがない過去タグから保守ブランチを作る場合は、保守用のCIを含むPRで準備する。
 
 ## 参考
 
