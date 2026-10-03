@@ -1,22 +1,25 @@
 # 開発環境のセットアップと確認
 
-更新日：2026-09-11。Issue #11の開発基盤は.NET SDK **10.0.401**とWPFを使う。対象はWindows 11の64ビット環境。現在の導入スクリプトとCIはx64 SDKを使い、ARM64 PCでの追試はまだ行っていない。
+更新日：2026-10-03。Issue #11の開発基盤は.NET SDK **10.0.401**とWPFを使う。対象はWindows 11の64ビット環境。現在の導入スクリプトとCIはx64 SDKを使い、ARM64 PCでの追試はまだ行っていない。
+
+2026-10-03のユーザー承認により、#11はこのPCでの確認と対象版のCI成功を完了条件とする。2台目のPCは未確保で、確認は未実施。[独立Issue #16](https://github.com/sakuma-dev/minecraft-mod-sync/issues/16)の残件として管理し、#11や後続の本実装を止める条件にはしない。CIの成功を別PCでの確認の代わりにはしない。
 
 ## 前提と取得
 
 Git、Windows PowerShell 5.1以降、MicrosoftのSDK配布先とnuget.orgへ接続できる環境が必要。Visual Studioのインストールは必須にしない。以下はこのリポジトリのルートで、順番に実行する。
 
-PR #14を別のPCで確認する場合は、既存の作業と分けた新しいフォルダーに取得する。
+別PCの追試では、既存の作業と分けた新しいフォルダーに取得する。PR #14のマージ後も使えるよう、検証対象のコミットSHAをIssue #16で決め、固定して取得する。
 
 ```powershell
 git clone https://github.com/sakuma-dev/minecraft-mod-sync.git
 cd minecraft-mod-sync
-git fetch origin pull/14/head
-git switch --detach FETCH_HEAD
+$verificationCommit = 'Issue #16で指定したコミットSHAに置き換える'
+git fetch origin
+git switch --detach $verificationCommit
 git rev-parse HEAD
 ```
 
-最後のコミットIDを確認結果に記録する。このcheckoutは追試用であり、実装を始める際は[開発の進め方](../CONTRIBUTING.md)に従って作業ブランチを作る。
+`$verificationCommit`を実際のSHAへ置き換え、最後のコミットIDが一致することを確認して結果に記録する。マージ前のPR #14を追試する場合に限り、`git fetch origin pull/14/head`で取得し、`git switch --detach FETCH_HEAD`で切り替えた後にSHAを記録してもよい。このcheckoutは追試用であり、実装を始める際は[開発の進め方](../CONTRIBUTING.md)に従って作業ブランチを作る。
 
 ## 1. SDKを準備する
 
@@ -62,21 +65,29 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\dev.ps1 -Task Run
 
 「Minecraft MOD Sync」の開発用プレビューが開く。「参加」は準備中で無効。「閉じる」で終了する。日本語表示・文字の欠け・ウィンドウ操作も確認する。Debugで実行したい場合は`-Configuration Debug`を付ける。
 
-いずれかの手順でエラーが出たら、その時点で止めて、実行したコマンドとエラー全文をPRへ共有する。失敗した確認を済ませたものとして次へ進めない。
+いずれかの手順でエラーが出たら、その時点で止めて、実行したコマンドとエラー全文を対象PRへ共有する。別PCの追試結果はIssue #16へ残す。失敗した確認を済ませたものとして次へ進めない。
 
-## 2台目のPCでの確認結果
+## このPCの確認履歴と#11の完了条件
 
-Issue #11には2人のPCでのビルド・テスト確認が必要である。2026-09-11時点で確認できたのはsakuma-dev側のWindows 11 Home x64（10.0.26200）。PowerShell 7と5.1でビルド・テスト、WPF起動を確認し、描画画像も確認した。CIのWindowsランナーは別の自動実行環境であり、もう1人のWindows 11 PCの確認を代用しない。
+2026-09-11時点で確認できたのはsakuma-dev側のWindows 11 Home x64（10.0.26200）。PowerShell 7と5.1でビルド・テスト、WPF起動を確認し、描画画像も確認した。
 
-次の形式でPR #14へ結果を残す。もう1台の結果が揃うまでIssue #11を閉じない。
+2026-10-03 22:24 JSTには、コミット`3d56ba293589d437c6ee5cdb70ddbd7287fc39dd`でCheckを再実行し、Releaseビルド（警告0・エラー0）とCore 5件・Platform 3件が成功した。その後のSmokeも成功した。結果は`artifacts/TestResults/sasak_SAKE_2026-10-03_22_24_44_net10.0.trx`と同名の`net10.0[1].trx`、`artifacts/startup/3d54946614f54b05ab430f3ee993efdc/`に保存した。この再確認ではRunの手動操作を実施していない。
+
+これらは過去の検証履歴であり、2026-10-03のユーザー承認による完了条件変更とは区別する。#11の完了には、このPCの確認結果、取り込み対象版のCI成功、差分と未解決指摘の確認、PR #14のdevへのマージが必要。文書変更をpushした後は、その版のCI結果を改めて確認する。
+
+## 2台目のPCでの確認結果（Issue #16）
+
+別PCでは上記のSetup・Check・Smoke・Runをすべて実行し、次の形式でIssue #16へ結果を残す。PC未確保・追試未実施の間はIssue #16をopenで維持し、取りやめ扱いや確認済みにはしない。全手順の成功と記録が揃ってからIssue #16を閉じる。CIのWindowsランナーは別の自動実行環境であり、もう1人のWindows 11 PCの確認を代用しない。
 
 ```text
 確認したコミット：
-確認者・Windowsの版：
+実行日時・確認者：
+Windowsの版・アーキテクチャ・PowerShell版：
 SDKセットアップ：成功／失敗（表示されたSDK版）
 Check：ビルド結果・テスト結果
 Smoke：成功／失敗
 Run：画面表示・日本語・閉じる操作
+ログ・描画画像の保存先：
 未確認・エラー：
 ```
 
