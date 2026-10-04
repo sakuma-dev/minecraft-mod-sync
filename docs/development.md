@@ -110,7 +110,9 @@ SDK固定は[global.json公式](https://learn.microsoft.com/en-us/dotnet/core/to
 powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/prism-import-verification.ps1
 ```
 
-入力定義は[issue12-minimal/input-definition.json](../tests/fixtures/prism-import/issue12-minimal/input-definition.json)。画面には絶対パスを入力する。Minecraft 1.21.1とNeoForge 21.1.228はこの定義から読む。固定packIdは`eca05ccf-89b3-48c9-a231-8dc58377f611`。mrpackは毎回新しいoperationIdで生成し、MODや外部取得ファイルを含めない。表示名は「ModSync Verify issue12」と処理IDの先頭8桁で、既存と区別する。
+入口スクリプトは日本語をWindows PowerShell 5.1で読めるようUTF-8 BOM付きにする。このファイルの文字コードは`.editorconfig`で指定し、Python試験で文字コードと5.1の`Parser.ParseFile`による構文を検査する。構文検査ではスクリプトを実行せず、検証画面も開かない。
+
+入力定義は[issue12-minimal/input-definition.json](../tests/fixtures/prism-import/issue12-minimal/input-definition.json)。画面にはドライブ文字付きのローカル絶対パスを入力し、260文字を超えても `\\?\` を自分で付けない。Minecraft 1.21.1とNeoForge 21.1.228はこの定義から読む。固定packIdは`eca05ccf-89b3-48c9-a231-8dc58377f611`。mrpackは毎回新しいoperationIdで生成し、MODや外部取得ファイルを含めない。表示名は「ModSync Verify issue12」と処理IDの先頭8桁で、既存と区別する。
 
 1. 本人がPrism実行ファイルとデータルートを指定する。本人がPrismの「フォルダーを開く」等で`instances`の場所を確認し、想定と違えば止める。製品は`accounts.json`・`prismlauncher.cfg`を読まない。既存7件のフォルダー名を確認し、空のCOBBLEVERSEも含め、画面の保護対象欄へセミコロン区切りで入力する。件数は製品コードで固定していない。
 2. 操作開始時にPrismのプロセスの有無だけを確認する。既に起動中なら「操作開始時からPrismが起動中」にチェックし、`beforeImport`を採取する。これを現在状態の基準とし、起動時から基準までの範囲は未確認と記録する。

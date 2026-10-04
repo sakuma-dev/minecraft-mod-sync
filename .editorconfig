@@ -10,3 +10,7 @@ indent_size = 4
 
 [*.{json,csproj,props,slnx,yml}]
 indent_size = 2
+
+# Windows PowerShell 5.1で日本語を含む入口を正しく読む。
+[scripts/prism-import-verification.ps1]
+charset = utf-8-bom
