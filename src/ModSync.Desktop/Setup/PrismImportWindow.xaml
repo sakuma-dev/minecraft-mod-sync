@@ -1,0 +1,43 @@
+<Window x:Class="ModSync.Desktop.Setup.PrismImportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Minecraft MOD Sync — Prism取り込み検証" Width="940" Height="760" MinWidth="800" MinHeight="650">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="24">
+            <TextBlock Text="Prism初回取り込みの検証" FontSize="24" Margin="0,0,0,12"/>
+            <TextBlock Text="本人がPrismの取り込み画面を確認します。登録と準備完了は別に判定します。ゲームは起動しません。" TextWrapping="Wrap"/>
+            <TextBlock Text="Prism実行ファイル（絶対パス）" Margin="0,12,0,4"/><TextBox x:Name="Executable"/>
+            <TextBlock Text="Prismデータルート（本人がinstancesの場所を確認）" Margin="0,8,0,4"/><TextBox x:Name="DataRoot"/>
+            <TextBlock Text="入力定義（絶対パス）" Margin="0,8,0,4"/><TextBox x:Name="InputDefinition"/>
+            <TextBlock Text="保護対象の既存フォルダー名（セミコロン区切り。空フォルダーも含める）" Margin="0,8,0,4"/><TextBox x:Name="ProtectedNames"/>
+            <WrapPanel Margin="0,10,0,6">
+                <CheckBox x:Name="AlreadyRunning" Content="操作開始時からPrismが起動中" Margin="0,0,16,0"/>
+                <CheckBox x:Name="FailureProbe" Content="失敗観測用の不正game入力"/>
+            </WrapPanel>
+            <WrapPanel>
+                <ComboBox x:Name="SnapshotStage" Width="210" SelectedIndex="0">
+                    <ComboBoxItem Content="beforePrismLaunch"/><ComboBoxItem Content="afterPrismLaunch"/>
+                    <ComboBoxItem Content="beforeImport"/><ComboBoxItem Content="afterImport"/><ComboBoxItem Content="afterReadinessCheck"/>
+                </ComboBox>
+                <Button Content="保護証拠を採取・比較" Click="CaptureClicked" Margin="8,0"/>
+            </WrapPanel>
+            <WrapPanel Margin="0,12,0,8">
+                <Button x:Name="StartButton" Content="入力を生成して取り込み依頼" Click="StartClicked"/>
+                <Button Content="待機を中止" Click="CancelClicked" Margin="8,0"/>
+                <Button x:Name="RegisterButton" Content="この取り込みを登録する" Click="RegisterClicked" IsEnabled="False"/>
+            </WrapPanel>
+            <TextBlock Text="処理ID（開始時に表示。途中終了・再確認では保存済みIDを指定）"/><TextBox x:Name="OperationId"/>
+            <WrapPanel Margin="0,8,0,8">
+                <Button Content="再確認（自動登録しない）" Click="RecheckClicked"/>
+                <Button Content="準備状況を再確認" Click="ReadinessClicked" Margin="8,0"/>
+                <ComboBox x:Name="UserReport" Width="180" SelectedIndex="0">
+                    <ComboBoxItem Content="confirmedInPrism"/><ComboBoxItem Content="cancelledInPrism"/>
+                    <ComboBoxItem Content="errorShownInPrism"/><ComboBoxItem Content="renamedInDialog"/>
+                </ComboBox>
+                <Button Content="本人の申告を記録" Click="ReportClicked" Margin="8,0"/>
+            </WrapPanel>
+            <TextBlock x:Name="Status" Text="未開始。保護証拠を採取してから進めてください。" TextWrapping="Wrap" FontSize="16"/>
+            <TextBox x:Name="Log" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Height="170" Margin="0,10,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</Window>

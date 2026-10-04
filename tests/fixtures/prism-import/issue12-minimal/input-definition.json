@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "kind": "modsync.prism-import-input-definition",
+  "inputSetId": "issue12-minimal-neoforge",
+  "packId": "eca05ccf-89b3-48c9-a231-8dc58377f611",
+  "purpose": "verification",
+  "displayNamePrefix": "ModSync Verify issue12",
+  "versionId": "issue12-verify-1",
+  "components": [
+    { "uid": "net.minecraft", "version": "1.21.1", "mrpackDependency": "minecraft" },
+    { "uid": "net.neoforged", "version": "21.1.228", "mrpackDependency": "neoforge" }
+  ],
+  "templateFiles": [
+    { "archivePath": "overrides/modsync/probe.txt", "source": "probe.txt" }
+  ]
+}
