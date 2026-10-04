@@ -76,7 +76,9 @@ public sealed class JsonImportRecordStore(string applicationRoot, Action<string>
         JsonSerializer.SerializeToUtf8Bytes(record, ImportJson.Options), true, ct);
     public async Task<ImportOperationRecord?> LoadOperationAsync(string key, Guid operationId, CancellationToken ct)
     {
-        var path = Path.Combine(OperationDirectory(key, operationId), "operation.json");
+        if (operationId == Guid.Empty) throw new IOException("処理IDが不正です。");
+        // 読み取りだけの再確認で、存在しない処理フォルダーを作らない。
+        var path = Path.Combine(Root(key), "operations", operationId.ToString(), "operation.json");
         if (!File.Exists(path)) return null;
         var record = await Read<ImportOperationRecord>(path, ct);
         if (record.SchemaVersion != 1 || record.Kind != "modsync.prism-import-operation" || record.OperationId != operationId ||

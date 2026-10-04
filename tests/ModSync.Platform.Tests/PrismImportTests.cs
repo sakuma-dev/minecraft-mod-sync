@@ -234,6 +234,14 @@ public sealed class PrismImportTests : IDisposable
         await Assert.ThrowsAsync<JsonException>(() => store.LoadOperationAsync(Key, id, default));
     }
     [Fact]
+    public async Task LookingUpAnUnknownOperationDoesNotCreateAnUnfinishedDirectory()
+    {
+        var app = DirectoryAt("app"); var store = new JsonImportRecordStore(app); var id = Guid.NewGuid();
+        Assert.Null(await store.LoadOperationAsync(Key, id, default));
+        Assert.False(Directory.Exists(Path.Combine(app, "prism-import", Key, "operations", id.ToString())));
+        Assert.Empty(await store.LoadOperationsAsync(Key, default));
+    }
+    [Fact]
     public async Task LockExcludesOtherHandlesAndStaleLockRequiresRecovery()
     {
         var app = DirectoryAt("app"); var store = new JsonImportRecordStore(app);
