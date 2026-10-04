@@ -13,6 +13,12 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        if (e.Args.SequenceEqual(new[] { "--prism-import-verification" }))
+        {
+            MainWindow = new Setup.PrismImportWindow();
+            MainWindow.Show();
+            return;
+        }
         if (e.Args.Length != 0 && (e.Args.Length != 2 || e.Args[0] != "--smoke-test"))
         {
             Shutdown(2);
